@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/options-app  # Mount local code inside the container
+    environment:
+      - FLASK_ENV=development
+    command: python app.py  # Override CMD to enable hot reload
+    stdin_open: true  # Keeps terminal open
+    tty: true         # Needed for interactive shell

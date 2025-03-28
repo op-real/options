@@ -1,0 +1,43 @@
+python -m venv venv
+source venv/bin/activate # On Windows: venv\Scripts\activate
+
+pip install Flask Flask-Caching redis pandas numpy scipy yfinance requests beautifulsoup4 lxml python-dotenv
+
+REDIS_URL=redis://your_redis_host:your_redis_port/0
+
+python app.py
+
+curl http://localhost:5000/cal_options_prices
+
+
+V. Further Enhancements & Considerations
+
+Error Handling: Add more specific error handling for yfinance (e.g., rate limiting, unavailable data). Implement retries with backoff for network requests.
+
+Volatility: Using historical volatility is a simplification. Consider:
+
+GARCH models: More sophisticated time-series models for volatility.
+
+Implied Volatility: Calculate IV from market option prices (more complex, requires root-finding algorithms) or use a data provider that supplies it.
+
+Risk-Free Rate: Fetch the risk-free rate dynamically (e.g., from yfinance for ^TNX or ^IRX matching the option's duration).
+
+Dividends: The basic BSM model doesn't account for dividends. Use the Merton '73 extension if dividend yields are significant. yfinance provides dividend yield data.
+
+Option Type: BSM is for European options (exercisable only at expiry). Most US equity options are American (exercisable anytime). For American options, Binomial or Trinomial tree models or Finite Difference methods are more appropriate, though BSM is often used as an approximation.
+
+Scalability:
+
+Task Queue: For very heavy loads or more complex calculations, replace ThreadPoolExecutor with Celery and Redis/RabbitMQ as a message broker.
+
+Database: Store results persistently in a database (PostgreSQL, MySQL) instead of relying solely on cache, especially if you need historical calculated prices.
+
+Async: Consider using an async framework like FastAPI with asyncio and httpx for potentially better I/O performance, although yfinance itself isn't fully async-native.
+
+Configuration: Move constants like RISK_FREE_RATE, DAYS_AHEAD, VOLATILITY_WINDOW to a configuration file or environment variables for easier management.
+
+API Security: Add authentication/authorization if this API is exposed publicly.
+
+Data Source Reliability: yfinance relies on scraping Yahoo Finance, which can change or become unreliable. For production systems, consider paid, dedicated financial data APIs (e.g., Polygon.io, Alpha Vantage Premium, Refinitiv Eikon).
+
+Logging: Enhance logging for better traceability and debugging.

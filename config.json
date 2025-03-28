@@ -1,0 +1,22 @@
+{
+    "ticker1": {
+      "underlying_price": 150.00,
+      "calculation_timestamp": "...",
+      "options": {
+        "YYYY-MM-DD": [ // Expiry Date
+          {
+            "strike": 145.0,
+            "call_price": 6.50,
+            "put_price": 1.20
+          },
+          // ... other strikes for this expiry
+        ]
+        // ... other expiries within 7 days
+      }
+    },
+    "ticker2": { ... },
+    // ... potentially errors for specific tickers
+    "errors": {
+       "ticker_xyz": "Error message fetching data"
+    }
+  }

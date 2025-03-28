@@ -1,2 +1,9 @@
 flask
-redis-server
+flask-caching  # Use dash (-) instead of underscore (_)
+redis  # Required for connecting Flask to Redis
+pandas
+yfinance
+numpy
+scipy
+python-dotenv  # Correct package name
+lxml

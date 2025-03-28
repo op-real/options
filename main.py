@@ -21,7 +21,7 @@ load_dotenv() # Optional: Load .env file if you have one
 CACHE_CONFIG = {
     "CACHE_TYPE": "RedisCache",  # Use 'SimpleCache' for in-memory testing
     "CACHE_DEFAULT_TIMEOUT": 3600,  # 1 hour default timeout
-    "CACHE_REDIS_URL": os.getenv("REDIS_URL", "redis://localhost:6379/0") # Get from env or default
+    "CACHE_REDIS_URL": os.getenv("REDIS_URL", "redis://redis:6379/0") # Get from env or default
 }
 
 # Option Pricing Configuration

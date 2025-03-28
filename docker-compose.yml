@@ -1,12 +1,24 @@
 version: '3.8'
 services:
+  redis:
+    image: redis:latest
+    container_name: redis_server
+    restart: always
+    ports:
+      - "6379:6379"
   app:
     build: .
+    depends_on:
+      - redis
+    container_name: options-app
     ports:
       - "3000:3000"
+      - "5000:5000"
     volumes:
       - .:/options-app  # Mount local code inside the container
     environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
       - FLASK_ENV=development
     command: python app.py  # Override CMD to enable hot reload
     stdin_open: true  # Keeps terminal open

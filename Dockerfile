@@ -15,6 +15,7 @@ COPY . .
 
 # Expose port 3000
 EXPOSE 3000
+EXPOSE 5000
 
 # Default command (will be overridden by docker-compose)
 CMD ["python", "app.py"]
